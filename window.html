@@ -8,22 +8,15 @@
 </head>
 <body>
   <script>
-    function a(b){
-      alert(arguments[1]);
-    }
-    a();
-    // let o={
-    //   valueOf:function(){
-    //     return -1
-    //   }
-    // }
-    // var a=true;
-    // var b=(a && c);
-    // alert(b);
-    // window上有哪些属性
-    // window.prompt('提示字符串，缺省文本');
-    // // window.close(); 
-    // window.confirm('sss');
+function a(obj){
+  obj.name=111;
+  obj={};
+  obj.name=222;
+  console.log(obj.name);
+}
+var o={};
+a(o);
+console.log(o);
   </script>
 </body>
 </html>
