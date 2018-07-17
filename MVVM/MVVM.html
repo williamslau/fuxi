@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="msg">
+    <div>sadasd</div>
+    <ul>
+        <li>{{msg}}</li>
+    </ul>
+    <div>{{name}}</div>
+    {{name}}
+</div>
+<script>
+    function ViewModel(data) {
+        this.data = data; // this.data代表的当前的值；
+        this.nodes = []; // 放节点的盒子
+    }
+
+    ViewModel.prototype.bindNode = function (node) { //将节点和数据绑定到一起
+        this.nodes.push(node);
+    };
+    // 将文档存到内存中
+    let obj = {msg: new ViewModel('欢迎'), name: new ViewModel('aaaaa')};
+
+    function compile(el) {
+        let ele = document.querySelector(el);
+        // 文档碎片
+        // 不直接操作DOM，可能会导致页面的回流;
+        let fragment = document.createDocumentFragment();
+        // 递归区ele下的元素
+        let child;
+        while (child = ele.firstChild) {
+            fragment.appendChild(child);
+        }
+        // fragment 是一个nodeList 类数组
+        // 需要转化为数组
+        // Array.prototype.slice.call
+        // es6 Array.form();
+        function replace(fragment) {     // 用来递归fragment.childNode
+            Array.from(fragment.childNodes).forEach(node => {
+                // 判断node节点是标签还是文本
+                if (node.nodeType === 1) { // 元素节点
+                    // 渠道节点上的所有属性 也是类数组
+                    Array.from(node.attributes).forEach(attr => {
+                        let {name, value} = attr;
+                        if (name.includes('v-')) {
+                            obj[value].bindNode(node);      //输入框
+                        }
+                    });
+                }
+                let reg = /\{\{([^}]*)\}\}/g; // 判断当权有没有{{}}的元素；
+                let text = node.textContent;
+                if (node.nodeType === 3 && reg.test(text)) {  // 文本节点
+                    text.replace(reg,function(){
+                        obj[arguments[1]].bindNode(node);
+                    })
+                }
+                if (node.childNodes.length) {
+                    replace(node);       // 递归
+                }
+            });
+        }
+
+        replace(fragment);
+        // 这里做一些是是不会导致页面回流的
+        //在插入到页面中
+        ele.appendChild(fragment);
+    }
+
+    compile('#app');
+</script>
+</body>
+</html>
