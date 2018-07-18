@@ -1,17 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-</head>
-<body>
-  <script>
-    function a(b){
-      alert(arguments[1]);
+  <style>
+    div{
+      background:#f69;
     }
-    a();
+    .clearfix:after{
+        clear:both;
+        display:block;
+        content:'';
+    }
+    .clear{
+      clear:both;
+    }
+    p{
+      float:left;
+      background:#ff0;
+      width:300px;
+      height:300px;
+      margin:10px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- <div>
+    <p></p>
+    <p></p>
+    <div class="clear"></div>
+  </div> -->
+  <script>
+    for (var i=0; i < 10; i++){
+    }
+    function doSomething(i){
+
+    }
+    alert(i);
+    // var a=1;
+    // function fn(){
+    //   var a=2;
+    //   function fn2(){
+    //     console.log(a);
+    //   }
+    //   fn2();
+    // }
+    // fn();
+    // function a(b){
+    //   alert(arguments[1]);
+    // }
+    // a();
     // let o={
     //   valueOf:function(){
     //     return -1
@@ -26,4 +70,5 @@
     // window.confirm('sss');
   </script>
 </body>
+
 </html>
