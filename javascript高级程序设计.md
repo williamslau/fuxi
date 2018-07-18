@@ -313,4 +313,62 @@ with
 
 
 
+## 变量
+
+### 复制变量的值
+```
+var a=5;	// 5
+var b=a;	// 5
+a=1;
+alert(b);	// 5
+```
+### 引用
+```
+var a={};
+var b=a;
+a.name=111;
+alert(b.name);	// 111
+```
+对象引用也可以用在函数传参上；
+```
+function a(o){
+  obj.name=111;
+}
+var obj={};
+a(obj);
+console.log(obj.name);  	//	111
+```
+参数是按照值传递的
+```
+function a(obj){
+  obj.name=111;
+  obj={};
+  obj.name=222;
+  console.log(obj.name);	// 222
+}
+var o={};
+a(o);
+console.log(o.name);		// 111
+```
+** 即使在函数内部修改了参数的值，原始的引用仍然不变，内部重写的obj是一个局部对象，会在函数执行完以后销毁 **
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
