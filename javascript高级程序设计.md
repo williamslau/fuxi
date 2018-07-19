@@ -447,9 +447,51 @@ console.log(item);  	// a   // 所取得值
 var item2 = arr.unshift(0,10) 	// 4	数组当前的length;
 ```
 
+### 重排序方法
+反转
 reverse();
 
+排序
 sort();
+sort(funciton(a,b){
+  return a-b;
+});
+
+### 操作方法
+```
+concat();   // 合并
+slice();    // 基于当前数组创建一个新数组
+// slice中参数如果是负数，则用length加上该参数来确定
+
+splice(起始位置,需要删除的个数,之后都是要插入的项)  //删除, 插入, 替换
+// splice()始终返回一个数组，为从原始苏族中删除的项
+```
+
+### 位置方法
+支持ie9+
+indexOf()
+lastIndexOf()
+
+### 迭代方法
+es5定义了五种迭代方法 ie9+
+filter() 过滤
+forEaach() 循环
+map() 从新组合 
+
+every() 全都匹配返回true
+some() 只要有匹配的就返回true
+
+### 归并方法
+es5
+reducer((前一个值，当前值，当前索引，数组对象)=>{},第一次循环相加)
+reducerRight()
+
+
+
+
+
+
+
 
 
 
