@@ -486,31 +486,326 @@ es5
 reducer((前一个值，当前值，当前索引，数组对象)=>{},第一次循环相加)
 reducerRight()
 
+### Date 类型
 
+UTC标准
+时间戳1970.1.1 00:00:00 开始的
+以毫秒数保存
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var Date=new Date();
 
 
 ```
+// es5
+Date.now() // 获取当前时间
+var start=Date.now();
+// doSomething()
+var stop=Date.now();
+console.log(stop-start);
+
+// 等价于
+
+var start=+new Date()
+// doSomething()
+var stop=+new Date()
+console.log(stop-start);
+```
+### 继承的方法
+按照浏览器设置地区格式化Date
+`toLocaleString()`
+
+### 日期格式化方法
+`toDateString()`——以特定于实现的格式显示星期几、月、日和年；
+`toTimeString()`——以特定于实现的格式显示时、分、秒和时区；
+`toLocaleDateString()`——以特定于地区的格式显示星期几、月、日和年；
+`toLocaleTimeString()`——以特定于实现的格式显示时、分、秒；
+`toUTCString()`——以特定于实现的格式完整的 UTC 日期。
+
+### 常用的日期方法
+```
+getFullYear()
+setFullYear()
+getMonth()    // 从零开始
+setMonth()
+getDate()
+setDate()
+getDay()
+setDay()
+getHours()
+setHours()
+getMinutes()
+setMinutes()
+getSeconds()
+setSeconds()
+```
+
+## RegExp 正则
+
+匹配模式
+g:全局模式
+i:不区分大小写
+m:多行模式
+
+.通配符指所有符号
+字面量写法
+```
+var reg=/[.aa]/g
+```
+构造函数写法
+```
+new RegExp('[.aa]',g);
+```
+### 正则方法
+
+exec()
+```
+var text = "cat, bat, sat, fat";
+var reg = /.at/g; 
+
+var a=reg.exec(text);
+
+var b=reg.exec(text);
+var c=reg.exec(text);
+var d=reg.exec(text);
+var e=reg.exec(text);
+console.log(a);
+console.log(b);
+console.log(c);
+console.log(d);
+console.log(e);
+```
+执行结果
+```
+[ 'cat', index: 0, input: 'cat, bat, sat, fat' ]
+[ 'bat', index: 5, input: 'cat, bat, sat, fat' ]
+[ 'sat', index: 10, input: 'cat, bat, sat, fat' ]
+[ 'fat', index: 15, input: 'cat, bat, sat, fat' ]
+null
+```
+test()
+返回值为true false
+经常被用在if语句中、、、、、、、
+属性
+```
+alert(RegExp.$_); // this has been a short summer 字符串本身
+alert(RegExp["$`"]); // this has been a 被匹配单词左边部分
+alert(RegExp["$'"]); // summer  被匹配单词右边部分
+alert(RegExp["$&"]); // short 被匹配的单词
+alert(RegExp["$+"]); // s 被匹配的值
+alert(RegExp["$*"]); // false 
+```
+
+
+## function 类型
+用var声明函数之后在var之前调用函数会报错，函数声明则不会（变量提升）
+```
+sun(sum())
+var sum=function(){
+  alert(1);
+}
+```
+### 函数内部属性
+arguments this
+// 严格模式下会报错
+** callee,arguments属性 **属性,这个属性是个指针，指向拥有这个arguments对象的函数
+```
+function a(num){
+  if (num <=1) {
+    return 1;
+  } else {
+    return num * a(num-1)
+  }
+} 
+function a(num){
+  if (num <=1) {
+    return 1;
+  } else {
+    return num * arguments.callee(num-1)
+  }
+} 
+```
+es5规范了另一个属性
+caller,这里保存着调用当前函数的函数引用，如果是全局函数，则是null
+
+```
+function outer(){
+	inner();
+}
+function inner(){
+	console.log(inner.caller);
+	console.log(arguments.callee.caller);
+}
+outer();    // console出调用他的那个函数
+```
+
+### 函数的属性和方法
+
+每个函数都包含`length`和`prototype`两个属性
+
+length 表示函数希望接受的参数的个数
+
+
+每个函数都包含两个非继承方法
+这两个方法的用途都是在特定的作用于中调用函数，等于设置函数体内this对象的值
+```
+// apply()
+function sum(a1,a2){
+  return a1+a2;
+}
+
+function a(n1,n2){
+  return sum.apply(this,arguments);
+}
+function b(n1,n2){
+  return sum.apply(this,[n1,n2]);
+}
+console.log('a',a(10,20));
+console.log('b',b(10,10));
+call()
+// 在使用call的情况下必须明确的传入每一个参数
+function sum(num1, num2){
+  return num1 + num2;
+}
+function callSum(num1, num2){
+  return sum.call(this, num1, num2);
+}
+console.log(callSum(10,10));
+```
+两者唯一的不同就是传参的方式不同，apply是数组，call是一个个的参数
+
+** 最大的作用就是从新指向this(补充作用域) **
+es5还规定了bind()
+```
+window.color = "red";
+var o = { color: 'blue' };
+function a(){
+  console.log(this.color);
+}
+a()
+a.call(window); // red
+a.apply(this);  // red
+a.call(o);      // blue
+a.bind(o)();    // blue
+```
+## 基本包装类型
+特殊的引用类型
+Boolean
+Number
+String
+按理说只有对象才有方法，所以字符串操作的方法其实内部完成了以下操作
+```
+var s1 = new String("some text");
+var s2 = s1.substring(2);
+s1 = null; 
+// 运行完后会瞬间销毁，所以不能绑定属性和方法
+```
+也适用于Boolean,Number
+
+### number
+```
+var num = 10.005;
+alert(num.toFixed(2)); //"10.01" 
+```
+
+### String类型
+字符方法
+```
+charAt(index) // 查找相应下标的值
+string[index] // 也可以查找
+
+concat(多个参数)  // 链接
+// 创建新字符串的方法
+slice(开始，结束)       // 负数和字符串长度相加
+substring(开始，结束)   // 不支持负数
+substr(开始，多少个)    // 第一个参数和长度相加，第二个参数不持持负数
+```
+位置方法
+```
+indexOf(要搜索的值，从那个位置开始搜索)
+lastIndexOf(要搜索的值，从那个位置开始搜索)
+// 返回所有E的下标
+var stringValue = "Lorem ipsum dolor sit amet, consectetur adipisicing elit";
+var positions = new Array();
+var pos = stringValue.indexOf("e");
+while(pos > -1){
+ positions.push(pos);
+ pos = stringValue.indexOf("e", pos + 1);
+}
+
+alert(positions); //"3,24,32,35,52" 
+
+
+trim()  // 清除左右空格
+toLowerCase()   //转小写
+toUpperCase()   //转大写
+```
+配合正则的方法
+```
+match()
+
+//与 pattern.exec(text)相同
+var text = "cat, bat, sat, fat";
+var pattern = /.at/;
+var matches = text.match(pattern); 
+alert(matches[0]); //"cat" 
+
+search()
+// 返回下标
+var text = "cat, bat, sat, fat";
+var pos = text.search(/at/);
+alert(pos); //1 
+
+```
+** replace() 替换**
+```
+var text = "cat, bat, sat, fat";
+var result = text.replace("at", "ond");
+alert(result); //"cond, bat, sat, fat" 
+
+result = text.replace(/at/g, "ond");
+alert(result); //"cond, bond, sond, fond" 
+
+var str(替换完成的字符串)=replace(/at/g,function(item,index,string){
+  return 要替换的值
+});
+
+// split() 也可以传入正则
+var colorText = "red,blue,green,yellow";
+var colors1 = colorText.split(","); //["red", "blue", "green", "yellow"]
+var colors2 = colorText.split(",", 2); //["red", "blue"]
+var colors3 = colorText.split(/[^\,]+/); //["", ",", ",", ",", ""] 
+
+
+//localeCompare() 比较两个字符串
+看字母位置
+var stringValue = "yellow";
+alert(stringValue.localeCompare("brick")); //1
+alert(stringValue.localeCompare("yellow")); //0
+alert(stringValue.localeCompare("zoo")); //-1 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

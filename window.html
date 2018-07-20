@@ -7,23 +7,26 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    div{
-      background:#f69;
+    div {
+      background: #f69;
     }
-    .clearfix:after{
-        clear:both;
-        display:block;
-        content:'';
+
+    .clearfix:after {
+      clear: both;
+      display: block;
+      content: '';
     }
-    .clear{
-      clear:both;
+
+    .clear {
+      clear: both;
     }
-    p{
-      float:left;
-      background:#ff0;
-      width:300px;
-      height:300px;
-      margin:10px;
+
+    p {
+      float: left;
+      background: #ff0;
+      width: 300px;
+      height: 300px;
+      margin: 10px;
     }
   </style>
 </head>
@@ -37,11 +40,9 @@
     <div class="clear"></div>
   </div> -->
   <script>
-    let arr=[1,5,2,4,2,4,2,8,6,5,42,111];
-    let s = new Set(arr);
-    console.log(s);
-    let arrr=[...s];
-    console.log(arrr);
+    var aa="<p class=\"greeting\">Hello world!</p>".replace(/[<>"&]/g, function(match, pos, originalText){ });
+    console.log(aa);
+    //&lt;p class=&quot;greeting&quot;&gt;Hello world!&lt;/p&gt; 
   </script>
 </body>
 
